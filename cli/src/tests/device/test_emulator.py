@@ -45,11 +45,24 @@ class TestEmulator(BaseDeviceTest):
         self.assertEqual(emulator.android_version, "16.0")
         self.assertEqual(emulator.api_level, "36")
 
+    def test_android_17_uses_api_37_0_package(self):
+        emulator = Emulator("android17", self.device, "17.0", self.d_partition,
+                            self.additional_args, "google_apis", "x86_64")
+        self.assertEqual(emulator.android_version, "17.0")
+        self.assertEqual(emulator.api_level, "37.0")
+
     @mock.patch("os.path.exists", return_value=True)
     @mock.patch("subprocess.check_call")
     def test_kvm_permission_preserves_user_accounts(self, check_call, path_exists):
         self.emu.change_permission()
         check_call.assert_called_once_with("sudo chown 1300:1301 /dev/kvm", shell=True)
+
+    @mock.patch("subprocess.check_call")
+    def test_tear_down_stops_emulator(self, check_call):
+        with self.assertRaises(SystemExit) as stopped:
+            self.emu.tear_down()
+        self.assertEqual(stopped.exception.code, 0)
+        check_call.assert_called_once_with(["adb", "-s", self.emu.adb_name, "emu", "kill"])
 
     @mock.patch("os.path.exists", mock.MagicMock(return_value=False))
     def test_initialisation_config_not_exist(self):

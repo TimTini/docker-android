@@ -36,7 +36,8 @@ class Emulator(Device):
         "12.0": "32",
         "13.0": "33",
         "14.0": "34",
-        "16.0": "36"
+        "16.0": "36",
+        "17.0": "37.0"
     }
 
     adb_name_id = 5554
@@ -257,7 +258,9 @@ class Emulator(Device):
         self.logger.info("Animations are disabled!")
 
     def tear_down(self, *args) -> None:
-        self.logger.warning("Sigterm is detected! Nothing to do!")
+        self.logger.info("SIGTERM received; stopping emulator through its console")
+        subprocess.check_call(["adb", "-s", self.adb_name, "emu", "kill"])
+        raise SystemExit(0)
 
     def __repr__(self) -> str:
         try:

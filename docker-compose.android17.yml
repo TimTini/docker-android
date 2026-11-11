@@ -1,0 +1,25 @@
+name: docker-android17
+
+services:
+  android17:
+    image: docker-android-local:17.0
+    container_name: android17-local
+    environment:
+      EMULATOR_DEVICE: "Samsung Galaxy S10"
+      EMULATOR_DATA_PARTITION: "4096m"
+      EMULATOR_ADDITIONAL_ARGS: "-memory 4096 -cores 4"
+      WEB_VNC: "true"
+      USER_BEHAVIOR_ANALYTICS: "false"
+    devices:
+      - /dev/kvm:/dev/kvm
+    ports:
+      - "127.0.0.1:6081:6080"
+    volumes:
+      - android17-data:/home/androidusr
+    shm_size: "2gb"
+    tmpfs:
+      - /tmp:mode=1777
+    stop_grace_period: 30s
+
+volumes:
+  android17-data:

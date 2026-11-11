@@ -96,6 +96,12 @@ RUN echo ${APP_PATH}/mixins/configs/display/.fehbg >> /etc/xdg/openbox/autostart
 #==================
 # Use created user
 #==================
+RUN sdkmanager "cmdline-tools;22.0"
+ENV PATH=${ANDROID_HOME}/cmdline-tools/22.0/bin:${PATH}
+RUN printf 'no\n' | avdmanager create avd --name sdk-validation \
+      --package "system-images;android-${EMULATOR_API_LEVEL};${EMULATOR_IMG_TYPE};${EMULATOR_SYS_IMG}" \
+ && grep -Fx "target=android-${EMULATOR_API_LEVEL}" "$HOME/.android/avd/sdk-validation.ini" \
+ && avdmanager delete avd --name sdk-validation
 USER ${USERID}:${GROUPID}
 ENV LOG_PATH=${WORK_PATH}/logs \
     WEB_LOG_PORT=9000
@@ -109,4 +115,4 @@ RUN mkdir -p "${WORK_PATH}/.config/Android Open Source Project" \
 #=========
 STOPSIGNAL SIGTERM
 ENV DEVICE_TYPE=emulator
-CMD ["${APP_PATH}/mixins/scripts/run.sh"]
+CMD ["exec ${APP_PATH}/mixins/scripts/run.sh"]
