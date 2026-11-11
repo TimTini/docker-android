@@ -60,14 +60,12 @@ if [[ "${p}" == *"emulator"* ]]; then
         ["17.0"]=37.0
     )
 
-    # To get the last index
-    keys=("${!api_levels[@]}")
-    sorted_keys=($(printf '%s\n' "${keys[@]}" | sort)) 
-    last_key=${keys[-2]} # because 9.0 will be last
+    last_key=${supported_android_version[-1]}
 
     if [ -z "${4}" ]; then
         read -p "Android Version ($(echo "${supported_android_version[@]}" \
-            | tr ' ' '|')) : " a_v
+            | tr ' ' '|'), default ${last_key}) : " a_v
+        a_v=${a_v:-${last_key}}
     else
         a_v=${4}
     fi

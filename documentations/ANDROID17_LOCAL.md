@@ -1,6 +1,6 @@
 # Local Android 17 image
 
-This build reuses the CLI/GUI setup described in [Local Android 16](ANDROID16_LOCAL.md). It creates a separate image, Compose project, container and data volume, with noVNC on localhost port 6081. Android 16 remains on port 6080.
+This build reuses the CLI/GUI setup described in [Local Android 16](ANDROID16_LOCAL.md). It creates a separate image, Compose project, container and data volume, with noVNC on localhost port 6081. Android 17 is the default version in `app.sh`; the local Android 16 setup is optional.
 
 On 2026-11-11, `sdkmanager --list --channel=0` reported the stable packages `platforms;android-37.0` (revision 2) and `system-images;android-37.0;google_apis;x86_64` (revision 8). The SDK package suffix is **37.0**; the running Android SDK property is **37**. The runtime map must preserve that package suffix because it is used verbatim by `avdmanager`.
 
@@ -61,4 +61,4 @@ The final local image built successfully (~12.3 GiB). All 28 CLI tests passed ag
 
 First boot and a real stop/start reached release `17`, SDK `37`, boot completed `1` and status `READY`. The script was observed as PID 1. Shutdown logged its SIGTERM handler and `OK: killing emulator`; Docker stopped with exit 143 rather than the earlier forced-kill exit 137. After restart, HTTP returned 200, the noVNC WebSocket returned `RFB 003.008`, and ADB screenshots succeeded with a rendered Android launcher. The earlier screenshot assertion and stale-lock startup failures were not present in the final checks.
 
-Android 16 remained running on port 6080 with its original start time and `READY` state throughout. Android 17 image/cache/volume data use the H:-backed Docker disk. Audio/modem functionality, Google-account sign-in, individual APK compatibility and browser mouse/keyboard E2E were not tested.
+Android 17 image/cache/volume data use the H:-backed Docker disk. Audio/modem functionality, Google-account sign-in, individual APK compatibility and browser mouse/keyboard E2E were not tested.
