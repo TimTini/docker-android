@@ -19,6 +19,8 @@ backup
 **/xunit.xml
 **/coverage
 tmp/
+work/
+venv-local/
 
 docker
 documentations

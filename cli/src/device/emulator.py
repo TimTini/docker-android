@@ -35,7 +35,8 @@ class Emulator(Device):
         "11.0": "30",
         "12.0": "32",
         "13.0": "33",
-        "14.0": "34"
+        "14.0": "34",
+        "16.0": "36"
     }
 
     adb_name_id = 5554
@@ -167,10 +168,7 @@ class Emulator(Device):
     def change_permission(self) -> None:
         kvm_path = "/dev/kvm"
         if os.path.exists(kvm_path):
-            cmds = (f"sudo chown 1300:1301 {kvm_path}",
-                    "sudo sed -i '1d' /etc/passwd")
-            for c in cmds:
-                subprocess.check_call(c, shell=True)
+            subprocess.check_call(f"sudo chown 1300:1301 {kvm_path}", shell=True)
             self.logger.info("KVM permission is granted!")
         else:
             raise RuntimeError("/dev/kvm cannot be found!")

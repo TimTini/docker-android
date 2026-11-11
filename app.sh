@@ -48,7 +48,7 @@ else
 fi
 
 if [[ "${p}" == *"emulator"* ]]; then
-    supported_android_version=("9.0" "10.0" "11.0" "12.0" "13.0" "14.0")
+    supported_android_version=("9.0" "10.0" "11.0" "12.0" "13.0" "14.0" "16.0")
     declare -A api_levels=(
         ["9.0"]=28
         ["10.0"]=29
@@ -56,6 +56,7 @@ if [[ "${p}" == *"emulator"* ]]; then
         ["12.0"]=32
         ["13.0"]=33
         ["14.0"]=34
+        ["16.0"]=36
     )
 
     # To get the last index
@@ -84,7 +85,10 @@ function build() {
     cmd="docker build --no-cache -t ${IMAGE_NAME_SPECIFIC_RELEASE} --build-arg DOCKER_ANDROID_VERSION=${r_v} "
     if [ -n "${a_v}" ]; then
         DOCKER_BUILDKIT=1
-        cmd="${cmd} --secret id=extension,src=extension.sh --build-arg EMULATOR_ANDROID_VERSION=${a_v} --build-arg EMULATOR_API_LEVEL=${a_l} "
+        cmd="${cmd} --build-arg EMULATOR_ANDROID_VERSION=${a_v} --build-arg EMULATOR_API_LEVEL=${a_l} "
+        if [[ "${p}" == "pro"* ]]; then
+            cmd="${cmd} --secret id=extension,src=extension.sh "
+        fi
     fi
 
     if [[ "${p}" == *"genymotion"* ]]; then

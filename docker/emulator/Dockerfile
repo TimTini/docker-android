@@ -29,6 +29,15 @@ RUN yes | sdkmanager --licenses \
 #==================
 RUN apt-get -qqy update && apt-get -qqy install --no-install-recommends \
     feh \
+    openbox \
+    sudo \
+    python3-venv \
+    libnss3 \
+    libpulse0 \
+    libasound2t64 \
+    libxkbcommon-x11-0 \
+    libegl1 \
+    libgl1 \
     x11vnc \
     xterm \
  && apt autoremove -y \
@@ -70,8 +79,13 @@ ENV APP_PATH=${WORK_PATH}/${SCRIPT_PATH}
 RUN mkdir -p ${APP_PATH}
 COPY mixins ${APP_PATH}/mixins
 COPY cli ${APP_PATH}/cli
-RUN --mount=type=secret,id=extension,dst=/tmp/extension.sh \
-    bash /tmp/extension.sh
+RUN python3 -m venv /opt/docker-android-venv \
+ && /opt/docker-android-venv/bin/pip install --no-cache-dir ${APP_PATH}/cli \
+ && ln -s /opt/docker-android-venv/bin/docker-android /usr/local/bin/docker-android \
+ && docker-android --help \
+ && sed -i 's/\r$//' ${APP_PATH}/mixins/scripts/run.sh \
+ && chmod +x ${APP_PATH}/mixins/scripts/run.sh \
+ && chown -R ${USERID}:${GROUPID} ${APP_PATH}
 RUN echo "${USERNAME} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 #===================

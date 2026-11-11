@@ -14,6 +14,7 @@ backup
 **/xunit.xml
 **/coverage
 tmp/
+/work/
 
 # Dev-files
 n*.txt

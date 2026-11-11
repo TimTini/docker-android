@@ -52,6 +52,8 @@ List of Docker-Images
 |-|-|budtmo/docker-android:genymotion|budtmo/docker-android:genymotion_<release_version>|
 |-|-|budtmo/docker-android:mcp|budtmo/docker-android:mcp_<release_version>|
 
+For a locally built Android 16 (API 36) image without the Pro registry image, see [Local Android 16](./documentations/ANDROID16_LOCAL.md).
+
 List of Devices
 ---------------
 

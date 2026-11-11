@@ -1,0 +1,20 @@
+services:
+  android:
+    image: docker-android-local:16.0
+    container_name: android16-local
+    environment:
+      EMULATOR_DEVICE: "Samsung Galaxy S10"
+      EMULATOR_DATA_PARTITION: "4096m"
+      EMULATOR_ADDITIONAL_ARGS: "-memory 4096 -cores 4"
+      WEB_VNC: "true"
+      USER_BEHAVIOR_ANALYTICS: "false"
+    devices:
+      - /dev/kvm:/dev/kvm
+    ports:
+      - "127.0.0.1:6080:6080"
+    volumes:
+      - android16-data:/home/androidusr
+    shm_size: "2gb"
+
+volumes:
+  android16-data:
