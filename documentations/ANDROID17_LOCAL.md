@@ -2,6 +2,8 @@
 
 This build reuses the CLI/GUI setup described in [Local Android 16](ANDROID16_LOCAL.md). It creates a separate image, Compose project, container and data volume, with noVNC on localhost port 6081. Android 17 is the default version in `app.sh`; the local Android 16 setup is optional.
 
+The prebuilt Linux/amd64 image is published publicly at `ghcr.io/timtini/docker-android:17.0`. Pull it with `docker pull ghcr.io/timtini/docker-android:17.0`; GHCR allows anonymous pulls for public container packages.
+
 On 2026-11-11, `sdkmanager --list --channel=0` reported the stable packages `platforms;android-37.0` (revision 2) and `system-images;android-37.0;google_apis;x86_64` (revision 8). The SDK package suffix is **37.0**; the running Android SDK property is **37**. The runtime map must preserve that package suffix because it is used verbatim by `avdmanager`.
 
 Google's [Android 17 setup](https://developer.android.com/about/versions/17/setup-sdk) identifies API 37. [Emulator release notes](https://developer.android.com/studio/releases/emulator) require at least 4 GiB of phone AVD RAM; this Compose file allocates 4096 MiB and four guest CPU cores. The [API 37 Google-services issue](https://developer.android.com/studio/run/emulator-troubleshooting) requires system-image revision 5 or newer; the selected image is revision 8. Google-account/app functionality still requires its own runtime testing.

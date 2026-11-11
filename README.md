@@ -52,7 +52,7 @@ List of Docker-Images
 |-|-|budtmo/docker-android:genymotion|budtmo/docker-android:genymotion_<release_version>|
 |-|-|budtmo/docker-android:mcp|budtmo/docker-android:mcp_<release_version>|
 
-Local builds support Android 16 (API 36) and Android 17 (API 37); Android 17 is the default version in `app.sh`. See [Local Android 16](./documentations/ANDROID16_LOCAL.md) and [Local Android 17](./documentations/ANDROID17_LOCAL.md). The public image table above lists registry releases and does not imply these local images are published there.
+Local builds support Android 16 (API 36) and Android 17 (API 37); Android 17 is the default version in `app.sh`. A prebuilt Linux/amd64 Android 17 image is available from [GHCR](https://github.com/users/TimTini/packages/container/package/docker-android): `docker pull ghcr.io/timtini/docker-android:17.0`. See [Local Android 16](./documentations/ANDROID16_LOCAL.md) and [Local Android 17](./documentations/ANDROID17_LOCAL.md). The public image table above lists Docker Hub releases; the GHCR build is separate.
 
 List of Devices
 ---------------
